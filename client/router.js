@@ -77,7 +77,7 @@ Router.prototype.route = function(pathDef, options, group) {
     var oldRoute = self._current.route;
     self._oldRouteChain.push(oldRoute);
 
-    var queryParams = self._qs.parse(context.querystring);
+    var queryParams = self._qs.parse((self.decodeQueryParamsOnce) ? (new URL(context.path, "http://example.com")).searchParams.toString() : context.querystring);
     // _qs.parse() gives us a object without prototypes,
     // created with Object.create(null)
     // Meteor's check doesn't play nice with it.
